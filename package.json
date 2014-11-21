@@ -20,7 +20,9 @@
     "request": "2.34.0",
     "thunkify": "0.0.1",
     "underscore": "1.6.0",
-    "validator": "3.16.1"
+    "validator": "3.16.1",
+    "q": "1.1.1",
+    "express": "4.10.2"
   },
   "devDependencies": {
   }
