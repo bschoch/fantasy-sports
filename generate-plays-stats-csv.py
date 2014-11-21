@@ -17,11 +17,12 @@ quarter4 = sorted(quarter4, key=operator.attrgetter('time.clock'), reverse=True)
 
 plays = quarter1 + quarter2 + quarter3 + quarter4
 
-print "qtr,clock,playerid,playername,passing_yds,rushing_yds,receiving_yds,receiving_rec,passing_tds,rushing_tds,receiving_tds"
+print "qtr,clock,playerid,playername,description,passing_yds,rushing_yds,receiving_yds,receiving_rec,passing_tds,rushing_tds,receiving_tds"
 
 for p in plays:
     qtr = p.time.qtr
     clock = p.time.clock
+    description = "\"" + p.desc + "\""
     for e in p.events:
         try:
             passing_yds = str(e.get("passing_yds", "0"))
@@ -32,6 +33,6 @@ for p in plays:
             rushing_tds = str(e.get("rushing_tds", "0"))
             receiving_tds = str(e.get("receiving_tds", "0"))
             if passing_yds != "0" or rushing_yds != "0" or receiving_yds != "0" or receiving_rec != "0" or passing_tds != "0" or rushing_tds != "0" or receiving_tds != "0":
-                print str(qtr) + "," + str(clock) + "," + e.get("playerid", "") + "," + e.get("playername", "") + "," + passing_yds + "," + rushing_yds + "," + receiving_yds + "," + receiving_rec + "," + passing_tds + "," + rushing_tds + "," + receiving_tds
+                print str(qtr) + "," + str(clock) + "," + e.get("playerid", "") + "," + e.get("playername", "") + "," + description + "," + passing_yds + "," + rushing_yds + "," + receiving_yds + "," + receiving_rec + "," + passing_tds + "," + rushing_tds + "," + receiving_tds
         except:
             continue
