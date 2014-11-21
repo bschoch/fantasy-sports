@@ -5,16 +5,60 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script src="build/react.js"></script>
-    <script src="build/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.1/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.1/JSXTransformer.js"></script>
   </head>
   <body>
-    <div id="example"></div>
+    <div id="app"></div>
+
     <script type="text/jsx">
-      React.render(
-        <h1>Hello, world!</h1>,
-        document.getElementById('example')
-      );
+    var GamePage = React.createClass({
+        mixins: []
+      , getInitialState: function() {
+            return {
+            }
+        }
+      , componentDidMount: function() {
+            var self = this
+
+            self.setState({})
+
+            // $.ajax({
+            //     url: '/_/api/board'
+            //   , type: 'GET'
+            //   , dataType: 'json'
+            //   , success: function(data) {
+            //         self.setState({boards: Boards.from_json(data.boards)})
+            //         // Got data.
+            //     }
+            //   , error: function(xhr, status, err) {
+            //         // not data.
+            //     }
+            // })
+        }
+      , render: function() {
+            return (
+                <div className="page-container">
+                    <div className="page">
+                        <div className="page-body-container">
+                            <div className="page-body">
+                                <div className="home-cta-container">
+                                    Aaron Rodgers
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    })
+
+
+    React.render(
+        <GamePage/>,
+        document.getElementById('app')
+    );
+
     </script>
   </body>
 </html>
