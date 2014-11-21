@@ -1,0 +1,27 @@
+{
+  "name": "fantasy-sports",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "cd ./src && NODE_PATH=./ python -m SimpleHTTPServer && cd -"
+  },
+  "dependencies": {
+    "co": "3.0.4",
+    "convict": "0.4.2",
+    "koa": "0.3.0",
+    "koa-body-parser": "1.1.0",
+    "koa-compress": "1.0.2",
+    "koa-gzip": "0.1.0",
+    "koa-logger": "1.2.0",
+    "koa-session": "2.0.0",
+    "koa-static": "1.4.3",
+    "koa-trie-router": "1.0.3",
+    "moment": "2.5.1",
+    "request": "2.34.0",
+    "thunkify": "0.0.1",
+    "underscore": "1.6.0",
+    "validator": "3.16.1"
+  },
+  "devDependencies": {
+  }
+}
