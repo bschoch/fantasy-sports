@@ -193,32 +193,65 @@
   <body>
     <div id="app"></div>
 
+    <script>
+        data = JSON.parse('<%= page %>')
+    </script>
+
     <script type="text/jsx">
+
+    var TeamsClient = function() {
+    }
+
+    TeamsClient.prototype.get = function(teamName, cb) {
+        $.ajax({
+            url: '/api/teams/' + teamName
+          , type: 'GET'
+          , dataType: 'json'
+          , success: function(data) {
+                cb(null, data)
+            }
+        })
+    }
+
+    var teamsClient = new TeamsClient()
+
     var GamePage = React.createClass({
         mixins: []
       , getInitialState: function() {
             return {
+                roster: []
             }
         }
       , componentDidMount: function() {
             var self = this
 
-            self.setState({})
+            // FIXME:
+            teamsClient.get(data.team, function(e, d) {
+                if (e) {
 
-            // $.ajax({
-            //     url: '/_/api/board'
-            //   , type: 'GET'
-            //   , dataType: 'json'
-            //   , success: function(data) {
-            //         self.setState({boards: Boards.from_json(data.boards)})
-            //         // Got data.
-            //     }
-            //   , error: function(xhr, status, err) {
-            //         // not data.
-            //     }
-            // })
+                } else {
+                    self.setState({roster: d.roster})
+                }
+            })
         }
       , render: function() {
+            var roster = this.state.roster.map(function(player) {
+                return (
+                    <div className="player">
+                        <div className="profile-pic"></div>
+                        <div className="points">21</div>
+                        <div className="details">
+                            <div className="name">
+                                {player.first_name}&nbsp;{player.last_name}&nbsp;(#{player.uniform_number})
+                            </div>
+                            <div className="pos">
+                                ({player.team}-{player.position})
+                            </div>
+                        </div>
+                    </div>
+                )
+            })
+
             return (
                 <div>
                     <div className="top-section"></div>
@@ -228,42 +261,7 @@
                             <div className="header">
                                 <div className="roster-name">Roster</div>
                             </div>
-                            <div className="player">
-                                <div className="profile-pic"></div>
-                                <div className="points">21</div>
-                                <div className="details">
-                                    <div className="name">
-                                        Colin Kaepernick long name
-                                    </div>
-                                    <div className="pos">
-                                        (SF-QB)
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="player">
-                                <div className="profile-pic"></div>
-                                <div className="points">21</div>
-                                <div className="details">
-                                    <div className="name">
-                                        Colin Kaepernick long name
-                                    </div>
-                                    <div className="pos">
-                                        (SF-QB)
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="player">
-                                <div className="profile-pic"></div>
-                                <div className="points">21</div>
-                                <div className="details">
-                                    <div className="name">
-                                        Colin Kaepernick long name
-                                    </div>
-                                    <div className="pos">
-                                        (SF-QB)
-                                    </div>
-                                </div>
-                            </div>
+                            {roster}
                             <div className="total">
                                 <div className="pos"></div>
                                 <div className="name">Total</div>
