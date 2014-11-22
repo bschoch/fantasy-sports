@@ -67,6 +67,10 @@
             background-color: @color-medium;
         }
 
+        a.name {
+            color: white;
+        }
+
         .bottom-section {
             position: absolute;
             bottom: 0;
@@ -265,7 +269,7 @@
                     if (e) {
 
                     } else {
-                        self.setState({team: d.team, standings: d.standings.concat(d.standings)})
+                        self.setState({team: d.team, standings: d.standings})
                     }
                 })
             }, 1000)
@@ -275,11 +279,13 @@
                 var roster = this.state.team.roster.map(function(player) {
                     return (
                         <div className="player">
-                            <div className="profile-pic"></div>
-                            <div className="points">21</div>
+                            <div className="profile-pic">
+                                <img className="profile-pic" src={"/images/players/" + player.playerid + ".png"} />
+                            </div>
+                            <div className="points">{player.score ? player.score.toFixed(2) : "0.00"}</div>
                             <div className="details">
                                 <div className="name">
-                                    {player.first_name}&nbsp;{player.last_name}&nbsp;
+                                    <a className="name" target="blank" href={player.profile_url}>{player.first_name}&nbsp;{player.last_name}&nbsp;</a>
                                 </div>
                                 <div className="pos">
                                     (#{player.uniform_number}&nbsp;{player.team}-{player.position})
@@ -293,7 +299,7 @@
                     return (
                         <div className="member">
                             <div className="standing">
-                                <span className="rank">{i + 1}</span>&nbsp;<span className="name">{user.name}</span>
+                                <span className="rank">{i + 1}</span>&nbsp;<a href={"/teams/" + user.name} className="name">{user.name}</a>
                             </div>
                             <div className="points">{parseInt(user.score, 10)}&nbsp;pts</div>
                         </div>
@@ -312,7 +318,7 @@
                                 {roster}
                                 <div className="total">
                                     <div className="">Total</div>
-                                    <div className="score">{parseInt(this.state.team.score, 10)}</div>
+                                    <div className="score">{this.state.team.score ? this.state.team.score.toFixed(2) : "0.00"}</div>
                                 </div>
                             </div>
                         </div>
