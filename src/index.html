@@ -141,16 +141,17 @@
 
             .total {
                 display: inline-block;
+                position: relative;
                 width: 100%;
                 height: 44px;
                 .font-20-regular();
                 line-height: 44px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                text-align: center;
 
-                .name {
-                    text-align: right;
+                .score {
+                    position: absolute;
+                    top: 0;
+                    right: 12px;
                 }
             }
         }
@@ -225,71 +226,75 @@
       , componentDidMount: function() {
             var self = this
 
-            // FIXME:
-            teamsClient.get(data.team, function(e, d) {
-                if (e) {
+            setInterval(function() {
+                teamsClient.get(data.team, function(e, d) {
+                    if (e) {
 
-                } else {
-                    self.setState({roster: d.team.roster})
-                }
-            })
+                    } else {
+                        self.setState({team: d.team})
+                    }
+                })
+            }, 1000)
         }
       , render: function() {
-            var roster = this.state.roster.map(function(player) {
+            if (this.state.team) {
+                var roster = this.state.team.roster.map(function(player) {
+                    return (
+                        <div className="player">
+                            <div className="profile-pic"></div>
+                            <div className="points">21</div>
+                            <div className="details">
+                                <div className="name">
+                                    {player.first_name}&nbsp;{player.last_name}&nbsp;(#{player.uniform_number})
+                                </div>
+                                <div className="pos">
+                                    ({player.team}-{player.position})
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })
+
                 return (
-                    <div className="player">
-                        <div className="profile-pic"></div>
-                        <div className="points">21</div>
-                        <div className="details">
-                            <div className="name">
-                                {player.first_name}&nbsp;{player.last_name}&nbsp;(#{player.uniform_number})
+                    <div>
+                        <div className="top-section"></div>
+                        <div className="bottom-section"></div>
+                        <div className="left-section">
+                            <div className="roster">
+                                <div className="header">
+                                    <div className="roster-name">Roster</div>
+                                </div>
+                                {roster}
+                                <div className="total">
+                                    <div className="">Total</div>
+                                    <div className="score">{parseInt(this.state.team.score, 10)}</div>
+                                </div>
                             </div>
-                            <div className="pos">
-                                ({player.team}-{player.position})
+                        </div>
+                        <div className="right-section">
+                            <div className="member">
+                                <div className="rank">1</div>
+                                <div className="name">Chris</div>
+                                <div className="points">55</div>
                             </div>
+                            <div className="member">
+                                <div className="rank">2</div>
+                                <div className="name">Chris</div>
+                                <div className="points">55</div>
+                            </div>
+                            <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
+                            <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
+                            <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
+                            <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
+                            <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
+                            <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
+                            <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
                         </div>
                     </div>
                 )
-            })
-
-            return (
-                <div>
-                    <div className="top-section"></div>
-                    <div className="bottom-section"></div>
-                    <div className="left-section">
-                        <div className="roster">
-                            <div className="header">
-                                <div className="roster-name">Roster</div>
-                            </div>
-                            {roster}
-                            <div className="total">
-                                <div className="pos"></div>
-                                <div className="name">Total</div>
-                                <div className="points">87</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="right-section">
-                        <div className="member">
-                            <div className="rank">1</div>
-                            <div className="name">Chris</div>
-                            <div className="points">55</div>
-                        </div>
-                        <div className="member">
-                            <div className="rank">2</div>
-                            <div className="name">Chris</div>
-                            <div className="points">55</div>
-                        </div>
-                        <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
-                        <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
-                        <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
-                        <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
-                        <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
-                        <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
-                        <div className="member"> <div className="rank">3</div> <div className="name">Chris</div> <div className="points">55</div> </div>
-                    </div>
-                </div>
-            )
+            } else {
+                return <div></div>
+            }
         }
     })
 
