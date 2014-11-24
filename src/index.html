@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Fantasy Sports Demo</title>
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <style type="text/less">
         html, body {
@@ -13,8 +12,8 @@
         @color-dark: #242a2e;
         @color-medium: lighten(#565656, 20%);
         @color-bright: #f7f7f7;
-        @font-family-regular: Arial, 'Montserrat', sans-serif;
-        @font-family-bold: 'Montserrat', sans-serif;
+        @font-family-regular: Arial, sans-serif;
+        /*@font-family-bold: 'Montserrat', sans-serif;*/
 
         @color-border: lighten(#242a2e, 2%);
 
@@ -27,6 +26,14 @@
         }
 
         .font-12-regular(@line-height: 14px, @font-weight: normal, @color: @color-bright) {
+            font-size: 12px;
+            line-height: @line-height;
+            font-weight: @font-weight;
+            font-family: @font-family-regular;
+            color: @color;
+        }
+
+        .font-12-bold(@line-height: 14px, @font-weight: bold, @color: @color-bright) {
             font-size: 12px;
             line-height: @line-height;
             font-weight: @font-weight;
@@ -154,10 +161,20 @@
             bottom: 0;
             left: 0;
             width: 100%;
+
             height: @bottom-section-height;
-            /*background-color: @color-medium;*/
-            background-image: url(/badient.png);
-            background-position-y: -140px;
+            background-color: @color-bright;
+            /*background-image: url(/badient.png);*/
+            /*background-position-y: -140px;*/
+
+            .last-play {
+                margin: 8px;
+                .font-12-bold(@color: @color-dark);
+
+                .cta {
+                    color: red;
+                }
+            }
         }
 
         .left-section {
@@ -331,6 +348,7 @@
 
     </style>
     <!-- Latest compiled and minified JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.0.0/less.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -369,6 +387,7 @@
             return {
                 team: void 0
               , standings: void 0
+              , lastPlay: ''
             }
         }
       , componentDidMount: function() {
@@ -389,7 +408,24 @@
                         d.team.rank = myRank
                         d.team.teamCount = d.standings.length
 
-                        self.setState({team: d.team, standings: d.standings})
+                        var newState = {
+                            team: d.team
+                          , standings: d.standings
+                        }
+
+                        var rosterIDs = _(d.team.roster).pluck('playerid')
+
+                        for (var i = 0, ii = d.plays.length; i < ii; ++i) {
+                            if (rosterIDs.indexOf(d.plays[i].playerid) > -1) {
+                                newState.lastPlay = d.plays[i]
+                            }
+                        }
+                        // if (d.plays.length) {
+                        //     newState.lastPlay = d.plays[0]
+                        // }
+                        console.log(newState.lastPlay)
+
+                        self.setState(newState)
                     }
                 })
             }, 1000)
@@ -411,7 +447,7 @@
                       + (player.passing_yds + player.rushing_yds + player.receiving_yds) + ' yds'
 
                     return (
-                        <div className="player">
+                        <div className="player" key={player.playerid}>
                             <div className="profile-pic-container">
                                 <img className="profile-pic" src={"/images/players/" + player.playerid + ".png"} />
                                 <div className="profile-pic-details">
@@ -433,7 +469,7 @@
 
                 var standings = this.state.standings.map(function(user, i) {
                     return (
-                        <a href={"/" + user.name} className="name">
+                        <a href={"/" + user.name} className="name" key={user.name}>
                             <div className="member">
                                 <div className="standing">
                                     <span className="rank">{i + 1}</span>&nbsp;<span className="name">{user.name}</span>
@@ -448,7 +484,7 @@
                     <div>
                         <div className="top-section">
                             <div className="brand">
-                                FanBet
+                                BetFan
                             </div>
                         </div>
                         <div className="team-header">
@@ -465,7 +501,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div className="bottom-section"></div>
+                        <div className="bottom-section">
+                            <div className="last-play">
+                                <span className="cta">Last Play:&nbsp;</span>{this.state.lastPlay.description}
+                            </div>
+                        </div>
                         <div className="left-section">
                             <div className="roster">
                                 {/*
