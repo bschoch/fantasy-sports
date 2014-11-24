@@ -1,4 +1,4 @@
-qtr,clock,playerid,playername,description,passing_yds,rushing_yds,receiving_yds,receiving_rec,passing_tds,rushing_tds,receiving_tds
+qtr  clock   playerid    playername  description passing_yds rushing_yds receiving_yds   receiving_rec   passing_tds rushing_tds receiving_tds
 1	15:00	00-0026143	M.Ryan	(15:00) M.Ryan scrambles left guard to ATL 24 for 4 yards (L.Kuechly).	0	4	0	0	0	0	0
 1	15:00	00-0031075	A.Blue	(15:00) A.Blue left guard to HOU 26 for 6 yards (D.Whitner).	0	6	0	0	0	0	0
 1	15:00	00-0027966	M.Ingram	(15:00) M.Ingram right guard to NO 22 for 2 yards (E.Lamur).	0	2	0	0	0	0	0
