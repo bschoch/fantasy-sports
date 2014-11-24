@@ -433,12 +433,14 @@
 
                 var standings = this.state.standings.map(function(user, i) {
                     return (
-                        <div className="member">
-                            <div className="standing">
-                                <span className="rank">{i + 1}</span>&nbsp;<a href={"/teams/" + user.name} className="name">{user.name}</a>
+                        <a href={"/" + user.name} className="name">
+                            <div className="member">
+                                <div className="standing">
+                                    <span className="rank">{i + 1}</span>&nbsp;<span className="name">{user.name}</span>
+                                </div>
+                                <div className="points">{user.score.toFixed(0)}&nbsp;pts</div>
                             </div>
-                            <div className="points">{user.score.toFixed(0)}&nbsp;pts</div>
-                        </div>
+                        </a>
                     )
                 })
 
