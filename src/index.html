@@ -42,6 +42,14 @@
             color: @color;
         }
 
+        .font-26-bold(@line-height: 32px, @font-weight: bold, @color: @color-bright) {
+            font-size: 26px;
+            line-height: @line-height;
+            font-weight: @font-weight;
+            font-family: @font-family-regular;
+            color: @color;
+        }
+
         body {
             position: absolute;
             top: 0;
@@ -54,7 +62,8 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        @top-section-height: 64px;
+        @top-section-height: 52px;
+        @team-header-height: 44px;
         @bottom-section-height: 44px;
         @right-section-width: 64px;
 
@@ -65,6 +74,77 @@
             width: 100%;
             height: @top-section-height;
             background-color: @color-medium;
+
+            background-image: url(/badient.png);
+            -webkit-background-size: cover;
+            background-size: cover;
+            background-position-y: -50px;
+
+            .brand {
+                margin: 0 auto;
+                width: 200px;
+
+                .font-26-bold(@line-height: 56px);
+                text-align: center;
+                text-transform: uppercase;
+                color: white;
+            }
+        }
+
+        .team-header {
+            position: absolute;
+            top: @top-section-height;
+            left: 0;
+            width: 100%;
+            height: @team-header-height;
+
+            background-color: @color-bright;
+
+            margin: 0 auto;
+            text-align: center;
+
+            .roster {
+                position: relative;
+                .font-16-bold(@line-height: @team-header-height, @color: black);
+
+                .roster-name {
+                    margin: 0 auto;
+                    width: 200px;
+                }
+
+                .roster-rank {
+                    position: absolute;
+                    left: 0;
+                    margin-left: 12px;
+                    margin-top: -4px;
+                }
+
+                .roster-points {
+                    position: absolute;
+                    right: 0;
+                    margin-right: 12px;
+                    margin-top: -4px;
+                }
+
+                .roster-rank-number,
+                .roster-points-number {
+                    font-size: 22px;
+                }
+
+                .roster-rank-rest {
+                    position: absolute;
+                    bottom: -12px;
+                    left: 8px;
+                    font-size: 10px;
+                }
+
+                .roster-points-rest {
+                    position: absolute;
+                    bottom: -12px;
+                    right: 8px;
+                    font-size: 10px;
+                }
+            }
         }
 
         a.name {
@@ -77,12 +157,16 @@
             left: 0;
             width: 100%;
             height: @bottom-section-height;
-            background-color: @color-medium;
+            /*background-color: @color-medium;*/
+            background-image: url(/badient.png);
+            -webkit-background-size: cover;
+            background-size: cover;
+            background-position-y: -200px;
         }
 
         .left-section {
             position: absolute;
-            top: @top-section-height;
+            top: @top-section-height + @team-header-height;
             bottom: @bottom-section-height;
             right: @right-section-width;
 
@@ -111,12 +195,10 @@
                 /*height: 32px;*/
                 border-bottom: 1px solid @color-border;
                 .font-12-regular(@line-height: 44px);
-            }
 
-            .roster-name {
-                display: inline-block;
-                width: 100%;
-                text-align: center;
+                /*background-image: url(/nfl-header.jpg);*/
+                /*-webkit-background-size: cover;*/
+                /*background-size: cover;*/
             }
 
             .profile-pic {
@@ -169,7 +251,7 @@
 
         .right-section {
             position: absolute;
-            top: @top-section-height;
+            top: @top-section-height + @team-header-height;
             bottom: @bottom-section-height;
             right: 0;
 
@@ -258,7 +340,8 @@
         mixins: []
       , getInitialState: function() {
             return {
-                roster: []
+                team: void 0
+              , standings: void 0
             }
         }
       , componentDidMount: function() {
@@ -269,10 +352,28 @@
                     if (e) {
 
                     } else {
+                        var myRank
+                        for (var i = 0, ii = d.standings.length; i < ii; ++i) {
+                            if (d.standings[i].name === data.team) {
+                                myRank = i + 1
+                            }
+                        }
+
+                        d.team.rank = myRank
+                        d.team.teamCount = d.standings.length
+
                         self.setState({team: d.team, standings: d.standings})
                     }
                 })
             }, 1000)
+        }
+      , getOrdinal: function(n) {
+            if((parseFloat(n) == parseInt(n)) && !isNaN(n)){
+                var s=["th","st","nd","rd"],
+                v=n%100;
+                return n+(s[(v-20)%10]||s[v]||s[0]);
+            }
+            return n;
         }
       , render: function() {
             if (this.state.team) {
@@ -308,13 +409,33 @@
 
                 return (
                     <div>
-                        <div className="top-section"></div>
+                        <div className="top-section">
+                            <div className="brand">
+                                FanBet
+                            </div>
+                        </div>
+                        <div className="team-header">
+                            <div className="roster">
+                                <div className="roster-rank">
+                                    <span className="roster-rank-number">
+                                    {this.getOrdinal(this.state.team.rank)}</span><span className="roster-rank-rest">of&nbsp;{this.state.team.teamCount}</span>
+                                </div>
+                                <div className="roster-points">
+                                    <span className="roster-points-number">495</span><br/><span className="roster-points-rest">pts</span>
+                                </div>
+                                <div className="roster-name">
+                                    {this.state.team.name}'s Team
+                                </div>
+                            </div>
+                        </div>
                         <div className="bottom-section"></div>
                         <div className="left-section">
                             <div className="roster">
+                                {/*
                                 <div className="header">
                                     <div className="roster-name">Roster</div>
                                 </div>
+                                */}
                                 {roster}
                                 <div className="total">
                                     <div className="">Total</div>

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "cd ./src && NODE_PATH=./ python -m SimpleHTTPServer"
+    "start": "cd ./lib && NODE_PATH=./ node app"
   },
   "dependencies": {
     "co": "3.0.4",
