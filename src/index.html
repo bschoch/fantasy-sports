@@ -16,7 +16,7 @@
         @font-family-regular: Arial, 'Montserrat', sans-serif;
         @font-family-bold: 'Montserrat', sans-serif;
 
-        @color-border: #565656;
+        @color-border: lighten(#242a2e, 2%);
 
         .font-20-regular(@line-height: 24px, @font-weight: bold, @color: @color-bright) {
             font-size: 20px;
@@ -170,7 +170,7 @@
             bottom: @bottom-section-height;
             right: @right-section-width;
 
-            border-right: 1px solid @color-border;
+            /*border-right: 1px solid @color-border;*/
             background-color: @color-dark;
 
             overflow-y: scroll;
@@ -201,12 +201,38 @@
                 /*background-size: cover;*/
             }
 
-            .profile-pic {
+            .profile-pic-container {
+                position: relative;
                 float: left;
                 width: 44px;
                 height: 44px;
                 margin-right: 8px;
-                background-color: @color-medium;
+            }
+
+            .profile-pic {
+                width: 44px;
+                height: 44px;
+            }
+
+            .profile-pic-details {
+                position: absolute;
+                left: 0;
+                width: 100%;
+                bottom: -1px;
+                height: 16px;
+
+                background-color: rgba(22, 22, 22, 50%);
+                text-align: center;
+            }
+
+            .profile-pic-position {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+
+                line-height: 16px;
             }
 
             .name {
@@ -377,19 +403,22 @@
         }
       , render: function() {
             if (this.state.team) {
-                var roster = this.state.team.roster.map(function(player) {
+                var roster = this.state.team.roster.map(function(player, i) {
                     return (
                         <div className="player">
-                            <div className="profile-pic">
+                            <div className="profile-pic-container">
                                 <img className="profile-pic" src={"/images/players/" + player.playerid + ".png"} />
+                                <div className="profile-pic-details">
+                                    <span className="profile-pic-position">{player.position}</span>
+                                </div>
                             </div>
                             <div className="points">{player.score ? player.score.toFixed(2) : "0.00"}</div>
                             <div className="details">
                                 <div className="name">
-                                    <a className="name" target="blank" href={player.profile_url}>{player.first_name}&nbsp;{player.last_name}&nbsp;</a>
+                                    <a className="name" target="blank" href={player.profile_url}>{player.first_name}&nbsp;{player.last_name}&nbsp;(#{player.uniform_number}, {player.team})</a>
                                 </div>
                                 <div className="pos">
-                                    (#{player.uniform_number}&nbsp;{player.team}-{player.position})
+
                                 </div>
                             </div>
                         </div>
