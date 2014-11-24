@@ -413,17 +413,18 @@
                           , standings: d.standings
                         }
 
-                        var rosterIDs = _(d.team.roster).pluck('playerid')
+                        // var rosterIDs = _(d.team.roster).pluck('playerid')
 
-                        for (var i = 0, ii = d.plays.length; i < ii; ++i) {
-                            if (rosterIDs.indexOf(d.plays[i].playerid) > -1) {
-                                newState.lastPlay = d.plays[i]
-                            }
-                        }
+                        // for (var i = 0, ii = d.plays.length; i < ii; ++i) {
+                        //     if (rosterIDs.indexOf(d.plays[i].playerid) > -1) {
+                        //         newState.lastPlay = d.plays[i]
+                        //     }
+                        // }
                         // if (d.plays.length) {
                         //     newState.lastPlay = d.plays[0]
                         // }
-                        console.log(newState.lastPlay)
+                        // console.log(newState.lastPlay)
+                        newState.lastPlay = d.plays.pop()
 
                         self.setState(newState)
                     }
