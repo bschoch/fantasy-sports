@@ -76,9 +76,7 @@
             background-color: @color-medium;
 
             background-image: url(/badient.png);
-            -webkit-background-size: cover;
-            background-size: cover;
-            background-position-y: -50px;
+            background-position-y: -30px;
 
             .brand {
                 margin: 0 auto;
@@ -134,14 +132,14 @@
                 .roster-rank-rest {
                     position: absolute;
                     bottom: -12px;
-                    left: 8px;
+                    left: 2px;
                     font-size: 10px;
                 }
 
                 .roster-points-rest {
                     position: absolute;
                     bottom: -12px;
-                    right: 8px;
+                    right: 2px;
                     font-size: 10px;
                 }
             }
@@ -159,16 +157,15 @@
             height: @bottom-section-height;
             /*background-color: @color-medium;*/
             background-image: url(/badient.png);
-            -webkit-background-size: cover;
-            background-size: cover;
-            background-position-y: -200px;
+            background-position-y: -140px;
         }
 
         .left-section {
             position: absolute;
             top: @top-section-height + @team-header-height;
-            bottom: @bottom-section-height;
             right: @right-section-width;
+            bottom: @bottom-section-height;
+            left: 0;
 
             /*border-right: 1px solid @color-border;*/
             background-color: @color-dark;
@@ -267,8 +264,8 @@
                 line-height: 44px;
                 text-align: center;
 
-                background-color: @color-bright;
-                color: black;
+                /*background-color: @color-bright;*/
+                /*color: black;*/
 
                 .score {
                     position: absolute;
@@ -287,6 +284,7 @@
             width: @right-section-width;
             background-color: @color-dark;
 
+            overflow-x: hidden;
             overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
 
