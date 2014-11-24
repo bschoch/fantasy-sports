@@ -22,7 +22,7 @@ print "qtr,clock,playerid,playername,description,passing_yds,rushing_yds,receivi
 for p in plays:
     qtr = p.time.qtr
     clock = p.time.clock
-    description = "\"" + p.desc + "\""
+    description = p.desc
     for e in p.events:
         try:
             passing_yds = str(e.get("passing_yds", "0"))
@@ -33,6 +33,6 @@ for p in plays:
             rushing_tds = str(e.get("rushing_tds", "0"))
             receiving_tds = str(e.get("receiving_tds", "0"))
             if passing_yds != "0" or rushing_yds != "0" or receiving_yds != "0" or receiving_rec != "0" or passing_tds != "0" or rushing_tds != "0" or receiving_tds != "0":
-                print str(qtr) + "," + str(clock) + "," + e.get("playerid", "") + "," + e.get("playername", "") + "," + description + "," + passing_yds + "," + rushing_yds + "," + receiving_yds + "," + receiving_rec + "," + passing_tds + "," + rushing_tds + "," + receiving_tds
+                print str(qtr) + "\t" + str(clock) + "\t" + e.get("playerid", "") + "\t" + e.get("playername", "") + "\t" + description + "\t" + passing_yds + "\t" + rushing_yds + "\t" + receiving_yds + "\t" + receiving_rec + "\t" + passing_tds + "\t" + rushing_tds + "\t" + receiving_tds
         except:
             continue
