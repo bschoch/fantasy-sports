@@ -17,7 +17,7 @@ quarter4 = sorted(quarter4, key=operator.attrgetter('time.clock'), reverse=True)
 
 plays = quarter1 + quarter2 + quarter3 + quarter4
 
-print "qtr  clock   playerid    playername  description passing_yds rushing_yds receiving_yds   receiving_rec   passing_tds rushing_tds receiving_tds"
+print "qtr\tclock\tplayerid\tplayername\tdescription\tpassing_yds\trushing_yds\treceiving_yds\treceiving_rec\tpassing_tds\trushing_tds\treceiving_tds"
 
 for p in plays:
     qtr = p.time.qtr
