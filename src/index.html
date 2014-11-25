@@ -310,7 +310,7 @@
                 height: @right-section-width;
                 .font-12-regular(@line-height: 22px);
 
-                background-image: url(https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p160x160/10538610_10101399014849827_6837924514296375200_n.jpg?oh=899b272c7778c663d1b1a34b5c72a00e&oe=54DF06B8&__gda__=1427980397_1f300688d5f7777e87115e924d64363d);
+                /*background-image: url(http://lorempixel.com/200/200/people);*/
                 -webkit-background-size: cover;
                 background-size: cover;
             }
@@ -469,9 +469,15 @@
                 })
 
                 var standings = this.state.standings.map(function(user, i) {
+                    var style = {
+                        'background-image': 'url(http://lorempixel.com/200/200/people?' + i +')'
+                    }
+
+
+
                     return (
                         <a href={"/" + user.name} className="name" key={user.name}>
-                            <div className="member">
+                            <div className="member" style={style}>
                                 <div className="standing">
                                     <span className="rank">{i + 1}</span>&nbsp;<span className="name">{user.name}</span>
                                 </div>
