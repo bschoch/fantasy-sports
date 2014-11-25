@@ -470,10 +470,8 @@
 
                 var standings = this.state.standings.map(function(user, i) {
                     var style = {
-                        'background-image': 'url(http://lorempixel.com/200/200/people?' + i +')'
+                        'background-image': 'url(http://lorempixel.com/200/200/people?' + user.name +')'
                     }
-
-
 
                     return (
                         <a href={"/" + user.name} className="name" key={user.name}>
